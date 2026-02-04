@@ -4,24 +4,28 @@
   <meta charset="UTF-8">
   <title>Galentine 💖</title>
 
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
     body {
-      background: pink;
-      font-family: Arial, sans-serif;
+      margin: 0;
       height: 100vh;
+      background: linear-gradient(135deg, #fbd3e9, #bb377d);
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: "Poppins", Arial, sans-serif;
     }
 
     .box {
       background: white;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      width: 520px;
+      border-radius: 22px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
       display: flex;
-      gap: 20px;
+      gap: 25px;
+      width: 580px;
       align-items: center;
     }
 
@@ -30,36 +34,52 @@
     }
 
     h1 {
-      margin-bottom: 20px;
+      color: #bb377d;
+      margin-bottom: 10px;
+    }
+
+    #gif {
+      width: 180px;
+      border-radius: 14px;
+      margin: 10px 0 20px;
     }
 
     button {
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 16px;
+      border-radius: 30px;
       border: none;
-      border-radius: 8px;
       cursor: pointer;
-      margin-right: 10px;
+      margin-right: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.06);
     }
 
     .yes {
-      background: hotpink;
-      color: white;
+      background: #ffb6c1;
+      color: #6a1b4d;
+      font-weight: 600;
     }
 
     .no {
-      background: lightgray;
+      background: #f2f2f2;
+      color: #555;
+      position: relative;
     }
 
     #msg {
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 18px;
-      font-weight: bold;
+      font-weight: 600;
+      color: #bb377d;
     }
 
     #meme {
       width: 200px;
-      border-radius: 12px;
+      border-radius: 14px;
       display: none;
     }
   </style>
@@ -71,14 +91,17 @@
     <div class="content">
       <h1>💖 Will you be my Galentine? 💖</h1>
 
+      <!-- Cute GIF on question page -->
+      <img id="gif" src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.gif" alt="Galentine gif">
+
       <button class="yes" onclick="yesClicked()">Yes 💕</button>
       <button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
 
       <p id="msg"></p>
     </div>
 
-    <!-- CHANGE IMAGE NAME IF NEEDED -->
-    <img id="meme" src="meme.jpg" alt="I knew it meme">
+    <!-- Meme shown after YES -->
+    <img id="meme" src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/meme.jpg" alt="Galentine meme">
   </div>
 
   <script>
@@ -93,6 +116,13 @@
       document.getElementById("noBtn").style.display = "none";
       document.getElementById("msg").innerText = "I knew you would say yes 😘";
       document.getElementById("meme").style.display = "block";
+
+      confetti({
+        particleCount: 160,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ffb6c1', '#ffc0cb', '#fbd3e9', '#bb377d']
+      });
     }
   </script>
 

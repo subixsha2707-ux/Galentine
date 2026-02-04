@@ -24,25 +24,31 @@
       border-radius: 22px;
       box-shadow: 0 15px 30px rgba(0,0,0,0.25);
       display: flex;
-      gap: 25px;
-      width: 600px;
+      gap: 30px;
+      width: 680px;
       align-items: center;
     }
 
+    /* 🎥 Video on LEFT */
+    #vid {
+      width: 210px;
+      border-radius: 16px;
+    }
+
+    /* RIGHT SIDE CONTENT */
     .content {
       flex: 1;
     }
 
     h1 {
       color: #bb377d;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
     }
 
-    /* 🎥 Video */
-    #vid {
-      width: 180px;
-      border-radius: 14px;
-      margin: 10px 0 20px;
+    .hint {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 18px;
     }
 
     button {
@@ -71,17 +77,30 @@
       position: relative;
     }
 
-    #msg {
+    /* 💌 Result text */
+    #msg-main {
       margin-top: 18px;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       color: #bb377d;
     }
 
-    #meme {
-      width: 200px;
-      border-radius: 14px;
+    #msg-sub {
+      margin-top: 4px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* 🎀 Images after YES */
+    .result-images {
       display: none;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .result-images img {
+      width: 160px;
+      border-radius: 14px;
     }
   </style>
 </head>
@@ -89,22 +108,31 @@
 <body>
 
   <div class="box">
+
+    <!-- LEFT: VIDEO -->
+    <video id="vid" autoplay loop muted playsinline>
+      <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
+    </video>
+
+    <!-- RIGHT: QUESTION + ACTION -->
     <div class="content">
       <h1 id="question">💖 Will you be my Galentine? 💖</h1>
-
-      <!-- 🎥 Video -->
-      <video id="vid" autoplay loop muted playsinline>
-        <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
-      </video>
+      <div class="hint">(Go Ahead Try Clicking NO 🤭)</div>
 
       <button class="yes" id="yesBtn" onclick="yesClicked()">Yes 💕</button>
       <button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
 
-      <p id="msg"></p>
+      <!-- Result text -->
+      <p id="msg-main"></p>
+      <p id="msg-sub"></p>
+
+      <!-- Result images -->
+      <div class="result-images" id="results">
+        <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/meme.jpg">
+        <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/extra.jpg">
+      </div>
     </div>
 
-    <!-- Meme -->
-    <img id="meme" src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/meme.jpg" alt="Galentine meme">
   </div>
 
   <script>
@@ -119,16 +147,29 @@
       document.getElementById("noBtn").style.display = "none";
       document.getElementById("yesBtn").style.display = "none";
       document.getElementById("question").style.display = "none";
+      document.querySelector(".hint").style.display = "none";
+      document.getElementById("vid").style.display = "none";
 
-      document.getElementById("msg").innerText = "I knew you would say yes 😘";
-      document.getElementById("meme").style.display = "block";
+      document.getElementById("msg-main").innerText = "I knew you would say yes 😘";
+      document.getElementById("msg-sub").innerText = "Never doubted you for a second 😮‍💨";
+      document.getElementById("results").style.display = "flex";
 
+      // 🎉 EXTRA CONFETTI (double burst)
       confetti({
-        particleCount: 180,
-        spread: 90,
+        particleCount: 260,
+        spread: 140,
         origin: { y: 0.6 },
         colors: ['#ffb6c1', '#ffc0cb', '#fbd3e9', '#bb377d']
       });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 220,
+          spread: 180,
+          origin: { y: 0.4 },
+          colors: ['#ffb6c1', '#ffc0cb', '#fbd3e9', '#bb377d']
+        });
+      }, 350);
     }
   </script>
 

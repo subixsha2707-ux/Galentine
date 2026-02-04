@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Galentine hhhhhhh💖</title>
+  <title>Galentine 💖</title>
 
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -16,53 +16,55 @@
       justify-content: center;
       align-items: center;
       font-family: "Poppins", Arial, sans-serif;
+      overflow: hidden;
     }
 
     .box {
       background: white;
-      padding: 30px;
-      border-radius: 22px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      padding: 40px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       display: flex;
-      gap: 30px;
-      width: 680px;
+      gap: 40px;
+      width: 820px;   /* BIGGER */
       align-items: center;
+      z-index: 2;
     }
 
-    /* 🎥 Video on LEFT */
+    /* 🎥 Video */
     #vid {
-      width: 210px;
-      border-radius: 16px;
+      width: 260px;  /* BIGGER */
+      border-radius: 20px;
     }
 
-    /* RIGHT SIDE CONTENT */
     .content {
       flex: 1;
     }
 
     h1 {
       color: #bb377d;
-      margin-bottom: 4px;
+      font-size: 30px; /* BIGGER */
+      margin-bottom: 6px;
     }
 
     .hint {
-      font-size: 14px;
+      font-size: 16px;
       color: #888;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
     button {
-      padding: 12px 26px;
-      font-size: 16px;
-      border-radius: 30px;
+      padding: 14px 32px;
+      font-size: 18px;
+      border-radius: 40px;
       border: none;
       cursor: pointer;
-      margin-right: 12px;
+      margin-right: 16px;
       transition: transform 0.2s ease;
     }
 
     button:hover {
-      transform: scale(1.06);
+      transform: scale(1.08);
     }
 
     .yes {
@@ -79,33 +81,68 @@
 
     /* 💌 Result text */
     #msg-main {
-      margin-top: 18px;
-      font-size: 20px;
+      margin-top: 22px;
+      font-size: 26px;
       font-weight: 700;
       color: #bb377d;
     }
 
     #msg-sub {
-      margin-top: 4px;
-      font-size: 14px;
+      margin-top: 6px;
+      font-size: 16px;
       color: #888;
     }
 
-    /* 🎀 Images after YES */
+    /* 🖼 Result images */
     .result-images {
       display: none;
-      gap: 15px;
-      margin-top: 15px;
+      gap: 22px;
+      margin-top: 22px;
     }
 
     .result-images img {
-      width: 160px;
-      border-radius: 14px;
+      width: 200px; /* BIGGER */
+      border-radius: 18px;
+    }
+
+    /* 💗 Floating heart doodles */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      display: none;
+      z-index: 1;
+    }
+
+    .hearts span {
+      position: absolute;
+      font-size: 26px;
+      animation: float 9s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- 💗 Floating hearts -->
+  <div class="hearts">
+    <span>💖</span><span>💕</span><span>💗</span><span>💞</span>
+    <span>💘</span><span>💓</span><span>💝</span><span>💖</span>
+  </div>
 
   <div class="box">
 
@@ -114,7 +151,7 @@
       <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
     </video>
 
-    <!-- RIGHT: QUESTION + ACTION -->
+    <!-- RIGHT: CONTENT -->
     <div class="content">
       <h1 id="question">💖 Will you be my Galentine? 💖</h1>
       <div class="hint">(Go Ahead Try Clicking NO 🤭)</div>
@@ -122,20 +159,23 @@
       <button class="yes" id="yesBtn" onclick="yesClicked()">Yes 💕</button>
       <button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
 
-      <!-- Result text -->
       <p id="msg-main"></p>
       <p id="msg-sub"></p>
 
-      <!-- Result images -->
       <div class="result-images" id="results">
         <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/meme.jpg">
         <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/extra.jpg">
       </div>
     </div>
-
   </div>
 
   <script>
+    // Position hearts randomly
+    document.querySelectorAll('.hearts span').forEach(span => {
+      span.style.left = Math.random() * 100 + '%';
+      span.style.animationDelay = Math.random() * 6 + 's';
+    });
+
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
       noBtn.style.position = "absolute";
@@ -150,24 +190,30 @@
       document.querySelector(".hint").style.display = "none";
       document.getElementById("vid").style.display = "none";
 
-      document.getElementById("msg-main").innerText = "I knew you would say yes 😘";
-      document.getElementById("msg-sub").innerText = "Never doubted you for a second 😮‍💨";
-      document.getElementById("results").style.display = "flex";
+      document.getElementById("msg-main").innerText =
+        "I knew you would say yes 😘";
+      document.getElementById("msg-sub").innerText =
+        "Never doubted you for a second 😮‍💨";
 
-      // 🎉 EXTRA CONFETTI (double burst)
+      document.getElementById("results").style.display = "flex";
+      document.querySelector(".hearts").style.display = "block";
+
+      // 💕 HEART CONFETTI
       confetti({
         particleCount: 260,
         spread: 140,
+        shapes: ['heart'],
         origin: { y: 0.6 },
-        colors: ['#ffb6c1', '#ffc0cb', '#fbd3e9', '#bb377d']
+        colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
       });
 
       setTimeout(() => {
         confetti({
           particleCount: 220,
           spread: 180,
+          shapes: ['heart'],
           origin: { y: 0.4 },
-          colors: ['#ffb6c1', '#ffc0cb', '#fbd3e9', '#bb377d']
+          colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
         });
       }, 350);
     }

@@ -19,21 +19,39 @@
       overflow: hidden;
     }
 
+    /* 💖 MAIN BOX */
     .box {
-      background: white;
+      position: relative;
+      background: #fff;
       padding: 40px;
       border-radius: 28px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       display: flex;
       gap: 40px;
-      width: 820px;   /* BIGGER */
+      width: 820px;
       align-items: center;
       z-index: 2;
+      overflow: hidden;
+    }
+
+    /* ❤️ PINTEREST HEART WALLPAPER */
+    .heart-wall {
+      position: absolute;
+      inset: 0;
+      background-image: url("https://i.imgur.com/fZ6xYQy.png");
+      background-size: 180px;
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    .box > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* 🎥 Video */
     #vid {
-      width: 260px;  /* BIGGER */
+      width: 260px;
       border-radius: 20px;
     }
 
@@ -43,7 +61,7 @@
 
     h1 {
       color: #bb377d;
-      font-size: 30px; /* BIGGER */
+      font-size: 30px;
       margin-bottom: 6px;
     }
 
@@ -79,7 +97,6 @@
       position: relative;
     }
 
-    /* 💌 Result text */
     #msg-main {
       margin-top: 22px;
       font-size: 26px;
@@ -93,7 +110,6 @@
       color: #888;
     }
 
-    /* 🖼 Result images */
     .result-images {
       display: none;
       gap: 22px;
@@ -101,11 +117,11 @@
     }
 
     .result-images img {
-      width: 200px; /* BIGGER */
+      width: 200px;
       border-radius: 18px;
     }
 
-    /* 💗 Floating heart doodles */
+    /* 💗 Floating hearts */
     .hearts {
       position: fixed;
       inset: 0;
@@ -146,6 +162,9 @@
 
   <div class="box">
 
+    <!-- ❤️ Heart wallpaper -->
+    <div class="heart-wall"></div>
+
     <!-- LEFT: VIDEO -->
     <video id="vid" autoplay loop muted playsinline>
       <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
@@ -157,7 +176,7 @@
       <div class="hint">(Go Ahead Try Clicking NO 🤭)</div>
 
       <button class="yes" id="yesBtn" onclick="yesClicked()">Yes 💕</button>
-      <button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
+      <button class="no" id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No 😢</button>
 
       <p id="msg-main"></p>
       <p id="msg-sub"></p>
@@ -170,7 +189,6 @@
   </div>
 
   <script>
-    // Position hearts randomly
     document.querySelectorAll('.hearts span').forEach(span => {
       span.style.left = Math.random() * 100 + '%';
       span.style.animationDelay = Math.random() * 6 + 's';
@@ -198,7 +216,6 @@
       document.getElementById("results").style.display = "flex";
       document.querySelector(".hearts").style.display = "block";
 
-      // 💕 HEART CONFETTI
       confetti({
         particleCount: 260,
         spread: 140,

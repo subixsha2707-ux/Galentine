@@ -4,25 +4,59 @@
   <meta charset="UTF-8">
   <title>Galentine 💖</title>
 
-  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(135deg, #fbd3e9, #bb377d);
+      font-family: "Poppins", Arial, sans-serif;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: "Poppins", Arial, sans-serif;
-      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(135deg, #fbd3e9, #bb377d);
+    }
+
+    /* 🎀 BACKGROUND LAYERS */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, #ffffff25 2px, transparent 3px),
+        radial-gradient(circle at 70% 60%, #ffffff25 2px, transparent 3px);
+      background-size: 80px 80px;
+      opacity: 0.35;
+      animation: drift 60s linear infinite;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          rgba(255,255,255,0.04),
+          rgba(255,255,255,0.04) 1px,
+          transparent 1px,
+          transparent 6px
+        );
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      from { background-position: 0 0; }
+      to { background-position: 300px 300px; }
     }
 
     /* 💖 MAIN BOX */
     .box {
       position: relative;
-      background: #fff;
       padding: 40px;
       border-radius: 28px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -30,33 +64,30 @@
       gap: 40px;
       width: 820px;
       align-items: center;
-      z-index: 2;
       overflow: hidden;
+      z-index: 2;
+
+      background-color: #fff0f6;
+      background-image:
+        radial-gradient(circle, #ffb6c1 18%, transparent 19%),
+        radial-gradient(circle, #ffd1dc 18%, transparent 19%);
+      background-size: 120px 120px;
+      background-position: 0 0, 60px 60px;
     }
 
-    /* ❤️ PINTEREST HEART WALLPAPER */
-    .heart-wall {
-      position: absolute;
-      inset: 0;
-      background-image: url("https://i.imgur.com/fZ6xYQy.png");
-      background-size: 180px;
-      opacity: 0.18;
-      z-index: 0;
+    /* 🧊 FROSTED CONTENT */
+    .content {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      padding: 26px 28px;
+      border-radius: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      flex: 1;
     }
 
-    .box > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* 🎥 Video */
     #vid {
       width: 260px;
       border-radius: 20px;
-    }
-
-    .content {
-      flex: 1;
     }
 
     h1 {
@@ -120,57 +151,16 @@
       width: 200px;
       border-radius: 18px;
     }
-
-    /* 💗 Floating hearts */
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      display: none;
-      z-index: 1;
-    }
-
-    .hearts span {
-      position: absolute;
-      font-size: 26px;
-      animation: float 9s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-      }
-      10% { opacity: 0.6; }
-      100% {
-        transform: translateY(-10vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- 💗 Floating hearts -->
-  <div class="hearts">
-    <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
-    <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
-  </div>
-
   <div class="box">
-
-    <!-- ❤️ Heart wallpaper -->
-    <div class="heart-wall"></div>
-
-    <!-- LEFT: VIDEO -->
     <video id="vid" autoplay loop muted playsinline>
       <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
     </video>
 
-    <!-- RIGHT: CONTENT -->
     <div class="content">
       <h1 id="question">💖 Will you be my Galentine? 💖</h1>
       <div class="hint">(Go Ahead Try Clicking NO 🤭)</div>
@@ -189,11 +179,6 @@
   </div>
 
   <script>
-    document.querySelectorAll('.hearts span').forEach(span => {
-      span.style.left = Math.random() * 100 + '%';
-      span.style.animationDelay = Math.random() * 6 + 's';
-    });
-
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
       noBtn.style.position = "absolute";
@@ -214,25 +199,14 @@
         "Never doubted you for a second 😮‍💨";
 
       document.getElementById("results").style.display = "flex";
-      document.querySelector(".hearts").style.display = "block";
 
       confetti({
         particleCount: 260,
         spread: 140,
         shapes: ['heart'],
         origin: { y: 0.6 },
-        colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
+        colors: ['#ff4d6d', '#ff8fab', '#ffc0cb']
       });
-
-      setTimeout(() => {
-        confetti({
-          particleCount: 220,
-          spread: 180,
-          shapes: ['heart'],
-          origin: { y: 0.4 },
-          colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
-        });
-      }, 350);
     }
   </script>
 

@@ -1,223 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Galentine 💖</title>
+function yesClicked() {
+  document.getElementById("noBtn").style.display = "none";
+  document.getElementById("yesBtn").style.display = "none";
+  document.getElementById("question").style.display = "none";
+  document.querySelector(".hint").style.display = "none";
+  document.getElementById("vid").style.display = "none";
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  document.getElementById("msg-main").innerText =
+    "I knew you would say yes 😘";
+  document.getElementById("msg-sub").innerText =
+    "Never doubted you for a second 😮‍💨";
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #fbd3e9, #bb377d);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Poppins", Arial, sans-serif;
-      overflow: hidden;
-    }
+  document.getElementById("results").style.display = "flex";
 
-    .box {
-      background: white;
-      padding: 40px;
-      border-radius: 28px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      display: flex;
-      gap: 40px;
-      width: 820px;   /* BIGGER */
-      align-items: center;
-      z-index: 2;
-    }
+  // SHOW HEARTS CONTAINER
+  const heartsContainer = document.querySelector(".hearts");
+  heartsContainer.style.display = "block";
 
-    /* 🎥 Video */
-    #vid {
-      width: 260px;  /* BIGGER */
-      border-radius: 20px;
-    }
+  // REMOVE OLD HEARTS IF ANY
+  heartsContainer.innerHTML = '';
 
-    .content {
-      flex: 1;
-    }
+  // CREATE 15 BIG FLOATING HEARTS
+  const heartEmojis = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
+  for(let i=0; i<15; i++){
+    const span = document.createElement('span');
+    span.innerText = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    span.style.left = Math.random() * 90 + '%';
+    span.style.fontSize = 30 + Math.random() * 30 + 'px'; // random size 30px-60px
+    span.style.animationDuration = 6 + Math.random() * 6 + 's'; // 6-12s
+    span.style.animationDelay = Math.random() * 5 + 's';
+    heartsContainer.appendChild(span);
+  }
 
-    h1 {
-      color: #bb377d;
-      font-size: 30px; /* BIGGER */
-      margin-bottom: 6px;
-    }
+  // 💕 HEART CONFETTI
+  confetti({
+    particleCount: 260,
+    spread: 140,
+    shapes: ['heart'],
+    origin: { y: 0.6 },
+    colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
+  });
 
-    .hint {
-      font-size: 16px;
-      color: #888;
-      margin-bottom: 24px;
-    }
-
-    button {
-      padding: 14px 32px;
-      font-size: 18px;
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      margin-right: 16px;
-      transition: transform 0.2s ease;
-    }
-
-    button:hover {
-      transform: scale(1.08);
-    }
-
-    .yes {
-      background: #ffb6c1;
-      color: #6a1b4d;
-      font-weight: 600;
-    }
-
-    .no {
-      background: #f2f2f2;
-      color: #555;
-      position: relative;
-    }
-
-    /* 💌 Result text */
-    #msg-main {
-      margin-top: 22px;
-      font-size: 26px;
-      font-weight: 700;
-      color: #bb377d;
-    }
-
-    #msg-sub {
-      margin-top: 6px;
-      font-size: 16px;
-      color: #888;
-    }
-
-    /* 🖼 Result images */
-    .result-images {
-      display: none;
-      gap: 22px;
-      margin-top: 22px;
-    }
-
-    .result-images img {
-      width: 200px; /* BIGGER */
-      border-radius: 18px;
-    }
-
-    /* 💗 Floating heart doodles */
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      display: none;
-      z-index: 1;
-    }
-
-    .hearts span {
-      position: absolute;
-      font-size: 26px;
-      animation: float 9s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-      }
-      10% { opacity: 0.6; }
-      100% {
-        transform: translateY(-10vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- 💗 Floating hearts -->
-  <div class="hearts">
-    <span>💖</span><span>💕</span><span>💗</span><span>💞</span>
-    <span>💘</span><span>💓</span><span>💝</span><span>💖</span>
-  </div>
-
-  <div class="box">
-
-    <!-- LEFT: VIDEO -->
-    <video id="vid" autoplay loop muted playsinline>
-      <source src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/galentine.mp4" type="video/mp4">
-    </video>
-
-    <!-- RIGHT: CONTENT -->
-    <div class="content">
-      <h1 id="question">💖 Will you be my Galentine? 💖</h1>
-      <div class="hint">(Go Ahead Try Clicking NO 🤭)</div>
-
-      <button class="yes" id="yesBtn" onclick="yesClicked()">Yes 💕</button>
-      <button class="no" id="noBtn" onmouseover="moveNo()">No 😢</button>
-
-      <p id="msg-main"></p>
-      <p id="msg-sub"></p>
-
-      <div class="result-images" id="results">
-        <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/meme.jpg">
-        <img src="https://raw.githubusercontent.com/subixsha2707-ux/Galentine/main/extra.jpg">
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Position hearts randomly
-    document.querySelectorAll('.hearts span').forEach(span => {
-      span.style.left = Math.random() * 100 + '%';
-      span.style.animationDelay = Math.random() * 6 + 's';
+  setTimeout(() => {
+    confetti({
+      particleCount: 220,
+      spread: 180,
+      shapes: ['heart'],
+      origin: { y: 0.4 },
+      colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
     });
-
-    function moveNo() {
-      const noBtn = document.getElementById("noBtn");
-      noBtn.style.position = "absolute";
-      noBtn.style.top = Math.random() * 80 + "%";
-      noBtn.style.left = Math.random() * 80 + "%";
-    }
-
-    function yesClicked() {
-      document.getElementById("noBtn").style.display = "none";
-      document.getElementById("yesBtn").style.display = "none";
-      document.getElementById("question").style.display = "none";
-      document.querySelector(".hint").style.display = "none";
-      document.getElementById("vid").style.display = "none";
-
-      document.getElementById("msg-main").innerText =
-        "I knew you would say yes 😘";
-      document.getElementById("msg-sub").innerText =
-        "Never doubted you for a second 😮‍💨";
-
-      document.getElementById("results").style.display = "flex";
-      document.querySelector(".hearts").style.display = "block";
-
-      // 💕 HEART CONFETTI
-      confetti({
-        particleCount: 260,
-        spread: 140,
-        shapes: ['heart'],
-        origin: { y: 0.6 },
-        colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
-      });
-
-      setTimeout(() => {
-        confetti({
-          particleCount: 220,
-          spread: 180,
-          shapes: ['heart'],
-          origin: { y: 0.4 },
-          colors: ['#ff4d6d', '#ff8fab', '#ffc0cb', '#fbd3e9']
-        });
-      }, 350);
-    }
-  </script>
-
-</body>
-</html>
+  }, 350);
+}

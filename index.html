@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valentine?</title>
+  <style>
+    body {
+      background: #ffe6eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+    .no {
+      background: #ccc;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>💖 Will you be my Valentine? 💖</h1>
+  <button class="yes" onclick="yes()">Yes 💕</button>
+  <button class="no" onmouseover="moveNo()">No 😢</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+  function yes() {
+    document.getElementById("msg").innerHTML =
+      "YAYYY!! 💞 I knew it 🥰";
+  }
+
+  function moveNo() {
+    const btn = document.querySelector('.no');
+    const box = document.querySelector('.box');
+
+    const maxX = box.clientWidth - btn.offsetWidth;
+    const maxY = box.clientHeight - btn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+</script>
+
+</body>
+</html>
